@@ -2,6 +2,13 @@
 {%TEMPLATE->struct/menu%}
 <h2>Agents ([[numAgents]])</h2>
 {%TEMPLATE->struct/messages%}
+<div style='overflow: auto;'>
+  {{IF [[accessControl.hasPermission([[$DAccessControl::CREATE_AGENT_ACCESS]])]]}}
+  <a style="float: left; margin-right: 5px;" href="agents.php?new=true" class="btn btn-light">New Agent</a>
+  {{ENDIF}}
+  <br />
+  <br />
+</div>
 <div class="card">
   <div class="table-responsive">
     <table class="table table-bordered table-sm" id="agents">

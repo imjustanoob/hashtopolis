@@ -13,9 +13,6 @@
 						{{IF [[accessControl.hasPermission([[$DAccessControl::VIEW_AGENT_ACCESS]])]]}}
 							<a class="dropdown-item[[menu.isActive('agents_list')]]" href="agents.php">Show Agents</a>
 						{{ENDIF}}
-						{{IF [[accessControl.hasPermission([[$DAccessControl::CREATE_AGENT_ACCESS]])]]}}
-							<a class="dropdown-item[[menu.isActive('agents_new')]]" href="agents.php?new=true">New Agent</a>
-						{{ENDIF}}
                         {{IF [[accessControl.hasPermission([[$DAccessControl::VIEW_AGENT_ACCESS]])]]}}
 							<a class="dropdown-item[[menu.isActive('agents_status')]]" href="agentStatus.php">Agent Status</a>
 						{{ENDIF}}
@@ -28,21 +25,11 @@
 						{{IF [[accessControl.hasPermission([[$DAccessControl::VIEW_TASK_ACCESS]])]]}}
 							<a class="dropdown-item[[menu.isActive('tasks_list')]]" href="tasks.php">Show Tasks</a>
 						{{ENDIF}}
-						{{IF [[accessControl.hasPermission([[$DAccessControl::CREATE_TASK_ACCESS]])]]}}
-							<a class="dropdown-item[[menu.isActive('tasks_new')]]" href="tasks.php?new=true">New Task</a>
-						{{ENDIF}}
 						{{IF [[accessControl.hasPermission([[$DAccessControl::VIEW_PRETASK_ACCESS]])]]}}
 							<a class="dropdown-item[[menu.isActive('tasks_pre')]]" href="pretasks.php">Preconfigured Tasks</a>
 						{{ENDIF}}
-						{{IF [[accessControl.hasPermission([[$DAccessControl::CREATE_PRETASK_ACCESS]])]]}}
-							<a class="dropdown-item[[menu.isActive('tasks_prenew')]]" href="pretasks.php?new=true">New preconfigured Tasks</a>
-						{{ENDIF}}
 						{{IF [[accessControl.hasPermission([[$DAccessControl::VIEW_SUPERTASK_ACCESS]])]]}}
 							<a class="dropdown-item[[menu.isActive('tasks_super')]]" href='supertasks.php'>Supertasks</a>
-						{{ENDIF}}
-						{{IF [[accessControl.hasPermission([[$DAccessControl::CREATE_SUPERTASK_ACCESS]])]]}}
-							<a class="dropdown-item[[menu.isActive('tasks_supernew')]]" href='supertasks.php?create=new'>New Supertask</a>
-							<a class="dropdown-item[[menu.isActive('tasks_superimport')]]" href='supertasks.php?create=import'>Import Supertask</a>
 						{{ENDIF}}
 					</div>
 				</li>
@@ -53,14 +40,8 @@
 						{{IF [[accessControl.hasPermission([[$DAccessControl::VIEW_HASHLIST_ACCESS]])]]}}
 							<a class="dropdown-item[[menu.isActive('lists_norm')]]" href="hashlists.php">Hashlists</a>
 						{{ENDIF}}
-						{{IF [[accessControl.hasPermission([[$DAccessControl::CREATE_HASHLIST_ACCESS]])]]}}
-							<a class="dropdown-item[[menu.isActive('lists_new')]]" href="hashlists.php?new=true">New hashlist</a>
-						{{ENDIF}}
 						{{IF [[accessControl.hasPermission([[$DAccessControl::VIEW_HASHLIST_ACCESS]])]]}}
 							<a class="dropdown-item[[menu.isActive('lists_super')]]" href="superhashlists.php">Superhashlists</a>
-						{{ENDIF}}
-						{{IF [[accessControl.hasPermission([[$DAccessControl::CREATE_SUPERHASHLIST_ACCESS]])]]}}
-							<a class="dropdown-item[[menu.isActive('lists_snew')]]" href="superhashlists.php?new=true">New superhashlist</a>
 						{{ENDIF}}
 						{{IF [[accessControl.hasPermission([[$DAccessControl::VIEW_HASHES_ACCESS]])]]}}
 							<a class="dropdown-item[[menu.isActive('lists_search')]]" href="search.php">Search Hash</a>

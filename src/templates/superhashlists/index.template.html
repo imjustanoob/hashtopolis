@@ -2,6 +2,13 @@
 {%TEMPLATE->struct/menu%}
 <h2>Superhashlists ([[sizeof([[lists]])]])</h2>
 {%TEMPLATE->struct/messages%}
+<div style='overflow: auto;'>
+  {{IF [[accessControl.hasPermission([[$DAccessControl::CREATE_SUPERHASHLIST_ACCESS]])]]}}
+  <a style="float: left; margin-right: 5px;" href="superhashlists.php?new=true" class="btn btn-light">New SuperHashlist</a>
+  {{ENDIF}}
+  <br />
+  <br />
+</div>
 <div class="card">
   <div class="table-responsive">
     <table class="table table-bordered table-sm" id="superhashlists">

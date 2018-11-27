@@ -21,12 +21,10 @@
 		<script src="static/popper.min.js"></script>
 		<script src="static/bootstrap.min.js"></script>
 		<script src="static/chartjs.bundle.min.js"></script>
-                <script type="text/javascript" src="static/datatables.min.js"></script>
-
+        <script type="text/javascript" src="static/datatables.min.js"></script>
 			{{IF [[autorefresh]] > 0}}
 				<meta http-equiv="refresh" content="[[autorefresh]]{{IF [[strlen([[autorefreshUrl]])]] > 0}}; URL=[[autorefreshUrl]]{{ENDIF}}">
 			{{ENDIF}}
-
 			<script type='text/javascript'>
 			/*$( window ).on( "load", function() {
 				if (typeof Cookies.get('toggledarkmode') === "undefined")

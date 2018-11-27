@@ -5,6 +5,13 @@
 {{IF [[zap]] && [[accessControl.hasPermission([[$DAccessControl::MANAGE_HASHLIST_ACCESS]])]]}}
 	{%TEMPLATE->hashlists/zap%}
 {{ENDIF}}
+<div style='overflow: auto;'>
+  {{IF [[accessControl.hasPermission([[$DAccessControl::CREATE_HASHLIST_ACCESS]])]]}}
+  <a style="float: left; margin-right: 5px;" href="hashlists.php?new=true" class="btn btn-light">New Hashlist</a>
+  {{ENDIF}}
+  <br />
+  <br />
+</div>
 <div class="card">
   <div class="table-responsive">
     <table class="table table-bordered table-sm" id="hashlists">

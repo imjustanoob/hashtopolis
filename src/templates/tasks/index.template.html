@@ -3,6 +3,9 @@
 <h2>{{IF [[showArchived]]}}Archived {{ENDIF}}Tasks ([[sizeof([[taskList]])]])</h2>
 {%TEMPLATE->struct/messages%}
 <div style='overflow: auto;'>
+  {{IF [[accessControl.hasPermission([[$DAccessControl::CREATE_TASK_ACCESS]])]]}}
+  <a style="float: left; margin-right: 5px;" href="tasks.php?new=true" class="btn btn-light">New Task</a>
+  {{ENDIF}}
 	{{IF [[accessControl.hasPermission([[$DAccessControl::CREATE_TASK_ACCESS]])]] && ![[showArchived]]}}
 		<form style ='float: left; padding-right: 5px;' action="tasks.php" class='form-inline' method="POST" onSubmit="if (!confirm('Really delete all finished tasks?')) return false;">
 			<input type='hidden' name='action' value='[[$DTaskAction::DELETE_FINISHED]]'>

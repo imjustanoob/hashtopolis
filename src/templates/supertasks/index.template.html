@@ -2,6 +2,14 @@
 {%TEMPLATE->struct/menu%}
 <h2>Supertasks ([[sizeof([[supertasks]])]])</h2>
 {%TEMPLATE->struct/messages%}
+<div style='overflow: auto;'>
+  {{IF [[accessControl.hasPermission([[$DAccessControl::CREATE_SUPERTASK_ACCESS]])]]}}
+  <a style="float: left; margin-right: 5px;" href="supertasks.php?create=new" class="btn btn-light">New Supertask</a>
+  <a style="float: left; margin-right: 5px;" href="supertasks.php?create=import" class="btn btn-light">Import Supertask</a>
+  {{ENDIF}}
+  <br />
+  <br />
+</div>
 <div class="card">
   <div class="table-responsive">
     <table class="table table-bordered">
