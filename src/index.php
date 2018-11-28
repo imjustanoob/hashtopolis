@@ -29,6 +29,12 @@ if (isset($_GET['err'])) {
       case '4':
         UI::addMessage(UI::ERROR, "You need to be logged in to view this! Please log in again.");
         break;
+      case '5':
+        UI::addMessage(UI::ERROR, "SSO variable is not present.");
+        break;
+      case '6':
+        UI::addMessage(UI::ERROR, "User from SSO is not valid!");
+        break;
     }
   }
 }

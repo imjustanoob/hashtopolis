@@ -190,6 +190,48 @@ class Login {
     setcookie("session", "$sessionKey", time() + $this->user->getSessionLifetime(), "", "", false, true);
     return true;
   }
+
+  public function SSOlogin($username) {
+    /****** Check password ******/
+    if ($this->valid == true) {
+      return false;
+    }
+    $filter = new QueryFilter(User::USERNAME, $username, "=");
+    
+    $check = Factory::getUserFactory()->filter([Factory::FILTER => $filter]);
+    if ($check === null || sizeof($check) == 0) {
+      return false;
+    }
+    $user = $check[0];
+    
+    if ($user->getIsValid() != 1) {
+      return false;
+    }
+
+    $this->user = $user;
+    /****** End check password ******/
+    
+    // At this point the user is authenticated successfully, so the session can be created.
+    
+    /****** Create session ******/
+    $startTime = time();
+    $s = new Session(null, $this->user->getId(), $startTime, $startTime, 1, $this->user->getSessionLifetime(), "");
+    $s = Factory::getSessionFactory()->save($s);
+    if ($s === null) {
+      return false;
+    }
+    $sessionKey = Encryption::sessionHash($s->getId(), $startTime, $user->getEmail());
+    $s->setSessionKey($sessionKey);
+    Factory::getSessionFactory()->update($s);
+    
+    $this->user->setLastLoginDate(time());
+    Factory::getUserFactory()->update($this->user);
+    
+    $this->valid = true;
+    Util::createLogEntry(DLogEntryIssuer::USER, $user->getId(), DLogEntry::INFO, "Successful login!");
+    setcookie("session", "$sessionKey", time() + $this->user->getSessionLifetime(), "", "", false, true);
+    return true;
+  }
 }
 
 

@@ -78,6 +78,15 @@ if(!isset($PRESENT["v0.9.0_agentBinaries"])){
     Factory::getAgentBinaryFactory()->update($agent);
   }
 
+if(!isset($PRESENT["v0.9.0_sso"])){
+  $config = new Config(null, 5, DConfig::SSO_LOGIN, '0');
+  Factory::getConfigFactory()->save($config);
+  $config = new Config(null, 5, DConfig::SSO_LOGIN_VAR, 'USER');
+  Factory::getConfigFactory()->save($config);
+  $EXECUTED["v0.9.0_sso"] = true;
+}
+
+
   Util::checkAgentVersion("python", "0.4.0", true);
   $EXECUTED["v0.9.0_agentBinaries"] = true;
 }

@@ -8,7 +8,9 @@
       <div class="row">
           <div class='col-md-3'></div>
           <div class='col-md-6'>
-              <br>
+              {{IF [[config.getVal("ssoLogin")]] == 1}}
+              <a href="sso_login.php"><button class="btn btn-primary">Use SSO Login</button></a>
+              {{ENDIF}}
               <form action='login.php' method='post' class="form-horizontal">
                   <input type='hidden' name='fw' value='[[fw]]'>
                   <div class="form-group">

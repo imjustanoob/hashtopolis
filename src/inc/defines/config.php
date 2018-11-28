@@ -94,6 +94,8 @@ class DConfig {
   const S_NAME            = "jeSuisHashtopussy";
   const SERVER_LOG_LEVEL  = "serverLogLevel";
   const ALLOW_DEREGISTER  = "allowDeregister";
+  const SSO_LOGIN         = "ssoLogin";
+  const SSO_LOGIN_VAR     = "ssoLoginVar";
   
   // Section: Multicast
   const MULTICAST_ENABLE    = "multicastEnable";
@@ -271,6 +273,9 @@ class DConfig {
       case DConfig::UAPI_SEND_TASK_IS_COMPLETE:
         return DConfigType::TICKBOX;
       case DConfig::HC_ERROR_IGNORE:
+      case DConfig::SSO_LOGIN:
+        return DConfigType::TICKBOX;
+      case DConfig::SSO_LOGIN_VAR:
         return DConfigType::STRING_INPUT;
     }
     return DConfigType::STRING_INPUT;
@@ -406,6 +411,10 @@ class DConfig {
         return "Also send 'isComplete' for each task on the User API when listing all tasks (might affect performance)";
       case DConfig::HC_ERROR_IGNORE:
         return "Ignore error messages from crackers which contain given strings (multiple values separated by comma)";
+      case DConfig::SSO_LOGIN:
+        return "Use Single Sign-On Configuration.";
+      case DConfig::SSO_LOGIN_VAR:
+        return "Single Sign-On $_SERVER variable.";
     }
     return $config;
   }
