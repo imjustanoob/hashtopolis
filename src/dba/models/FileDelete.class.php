@@ -22,6 +22,15 @@ class FileDelete extends AbstractModel {
     return $dict;
   }
   
+  static function getFeatures() {
+    $dict = array();
+    $dict['fileDeleteId'] = ['read_only' => True, "type" => "int", "subtype" => "unset", "choices" => "unset", "null" => False, "pk" => True, "protected" => True, "private" => False, "alias" => "fileDeleteId"];
+    $dict['filename'] = ['read_only' => True, "type" => "str(256)", "subtype" => "unset", "choices" => "unset", "null" => False, "pk" => False, "protected" => True, "private" => False, "alias" => "filename"];
+    $dict['time'] = ['read_only' => True, "type" => "int64", "subtype" => "unset", "choices" => "unset", "null" => False, "pk" => False, "protected" => True, "private" => False, "alias" => "time"];
+
+    return $dict;
+  }
+
   function getPrimaryKey() {
     return "fileDeleteId";
   }
@@ -65,4 +74,9 @@ class FileDelete extends AbstractModel {
   const FILE_DELETE_ID = "fileDeleteId";
   const FILENAME = "filename";
   const TIME = "time";
+
+  const PERM_CREATE = "permFileDeleteCreate";
+  const PERM_READ = "permFileDeleteRead";
+  const PERM_UPDATE = "permFileDeleteUpdate";
+  const PERM_DELETE = "permFileDeleteDelete";
 }

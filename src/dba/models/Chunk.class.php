@@ -49,6 +49,24 @@ class Chunk extends AbstractModel {
     return $dict;
   }
   
+  static function getFeatures() {
+    $dict = array();
+    $dict['chunkId'] = ['read_only' => True, "type" => "int", "subtype" => "unset", "choices" => "unset", "null" => False, "pk" => True, "protected" => True, "private" => False, "alias" => "chunkId"];
+    $dict['taskId'] = ['read_only' => True, "type" => "int", "subtype" => "unset", "choices" => "unset", "null" => False, "pk" => False, "protected" => True, "private" => False, "alias" => "taskId"];
+    $dict['skip'] = ['read_only' => True, "type" => "uint64", "subtype" => "unset", "choices" => "unset", "null" => False, "pk" => False, "protected" => True, "private" => False, "alias" => "skip"];
+    $dict['length'] = ['read_only' => True, "type" => "uint64", "subtype" => "unset", "choices" => "unset", "null" => False, "pk" => False, "protected" => True, "private" => False, "alias" => "length"];
+    $dict['agentId'] = ['read_only' => True, "type" => "int", "subtype" => "unset", "choices" => "unset", "null" => False, "pk" => False, "protected" => True, "private" => False, "alias" => "agentId"];
+    $dict['dispatchTime'] = ['read_only' => True, "type" => "int64", "subtype" => "unset", "choices" => "unset", "null" => False, "pk" => False, "protected" => True, "private" => False, "alias" => "dispatchTime"];
+    $dict['solveTime'] = ['read_only' => True, "type" => "int64", "subtype" => "unset", "choices" => "unset", "null" => False, "pk" => False, "protected" => True, "private" => False, "alias" => "solveTime"];
+    $dict['checkpoint'] = ['read_only' => True, "type" => "int64", "subtype" => "unset", "choices" => "unset", "null" => False, "pk" => False, "protected" => True, "private" => False, "alias" => "checkpoint"];
+    $dict['progress'] = ['read_only' => True, "type" => "int", "subtype" => "unset", "choices" => "unset", "null" => False, "pk" => False, "protected" => True, "private" => False, "alias" => "progress"];
+    $dict['state'] = ['read_only' => True, "type" => "int", "subtype" => "unset", "choices" => "unset", "null" => False, "pk" => False, "protected" => True, "private" => False, "alias" => "state"];
+    $dict['cracked'] = ['read_only' => True, "type" => "int", "subtype" => "unset", "choices" => "unset", "null" => False, "pk" => False, "protected" => True, "private" => False, "alias" => "cracked"];
+    $dict['speed'] = ['read_only' => True, "type" => "int64", "subtype" => "unset", "choices" => "unset", "null" => False, "pk" => False, "protected" => True, "private" => False, "alias" => "speed"];
+
+    return $dict;
+  }
+
   function getPrimaryKey() {
     return "chunkId";
   }
@@ -173,4 +191,9 @@ class Chunk extends AbstractModel {
   const STATE = "state";
   const CRACKED = "cracked";
   const SPEED = "speed";
+
+  const PERM_CREATE = "permChunkCreate";
+  const PERM_READ = "permChunkRead";
+  const PERM_UPDATE = "permChunkUpdate";
+  const PERM_DELETE = "permChunkDelete";
 }

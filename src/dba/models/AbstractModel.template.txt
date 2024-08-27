@@ -16,6 +16,13 @@ class __MODEL_NAME__ extends AbstractModel {
     return $dict;
   }
   
+  static function getFeatures() {
+    $dict = array();
+    __MODEL_FEATURES__
+
+    return $dict;
+  }
+
   function getPrimaryKey() {
     return "__MODEL_PK__";
   }
@@ -43,4 +50,6 @@ class __MODEL_NAME__ extends AbstractModel {
   __MODEL_GETTER_SETTER__
   
   __MODEL_VARIABLE_NAMES__
+
+  __MODEL_PERMISSION_DEFINES__
 }

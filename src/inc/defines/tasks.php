@@ -3,6 +3,9 @@
 class DPretaskAction {
   const SET_PRIORITY      = "setPriority";
   const SET_PRIORITY_PERM = DAccessControl::MANAGE_PRETASK_ACCESS;
+
+  const SET_MAX_AGENTS      = "setMaxAgents";
+  const SET_MAX_AGENTS_PERM = DAccessControl::MANAGE_PRETASK_ACCESS;
   
   const DELETE_PRETASK      = "deletePretask";
   const DELETE_PRETASK_PERM = DAccessControl::CREATE_PRETASK_ACCESS;
@@ -55,6 +58,12 @@ class DSupertaskAction {
   
   const BULK_SUPERTASK      = "bulkSupertaskCreation";
   const BULK_SUPERTASK_PERM = DAccessControl::CREATE_SUPERTASK_ACCESS;
+  
+  const REMOVE_PRETASK_FROM_SUPERTASK      = "removePretaskFromSupertask";
+  const REMOVE_PRETASK_FROM_SUPERTASK_PERM = DAccessControl::CREATE_SUPERTASK_ACCESS;
+  
+  const ADD_PRETASK_TO_SUPERTASK      = "addPretaskToSupertask";
+  const ADD_PRETASK_TO_SUPERTASK_PERM = DAccessControl::CREATE_SUPERTASK_ACCESS;
 }
 
 class DTaskAction {
@@ -93,6 +102,12 @@ class DTaskAction {
   
   const SET_PRIORITY      = "setPriority";
   const SET_PRIORITY_PERM = DAccessControl::MANAGE_TASK_ACCESS;
+
+  const SET_MAX_AGENTS      = "setMaxAgents";
+  const SET_MAX_AGENTS_PERM = DAccessControl::MANAGE_TASK_ACCESS;
+  
+  const SET_TOP_PRIORITY = "setTopPriority";
+  const SET_TOP_PRIORITY_PERM = DAccessControl::MANAGE_TASK_ACCESS;
   
   const CREATE_TASK      = "createTask";
   const CREATE_TASK_PERM = DAccessControl::CREATE_TASK_ACCESS;
@@ -102,6 +117,12 @@ class DTaskAction {
   
   const SET_SUPERTASK_PRIORITY      = "setSupertaskPriority";
   const SET_SUPERTASK_PRIORITY_PERM = DAccessControl::MANAGE_TASK_ACCESS;
+
+  const SET_SUPERTASK_MAX_AGENTS      = "setSupertaskMaxAgents";
+  const SET_SUPERTASK_MAX_AGENTS_PERM = DAccessControl::MANAGE_TASK_ACCESS;
+  
+  const SET_SUPERTASK_TOP_PRIORITY      = "setSupertaskTopPriority";
+  const SET_SUPERTASK_TOP_PRIORITY_PERM = DAccessControl::MANAGE_TASK_ACCESS;
   
   const ARCHIVE_TASK      = "archiveTask";
   const ARCHIVE_TASK_PERM = DAccessControl::CREATE_TASK_ACCESS;

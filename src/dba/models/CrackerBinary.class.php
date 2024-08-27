@@ -28,6 +28,17 @@ class CrackerBinary extends AbstractModel {
     return $dict;
   }
   
+  static function getFeatures() {
+    $dict = array();
+    $dict['crackerBinaryId'] = ['read_only' => True, "type" => "int", "subtype" => "unset", "choices" => "unset", "null" => False, "pk" => True, "protected" => True, "private" => False, "alias" => "crackerBinaryId"];
+    $dict['crackerBinaryTypeId'] = ['read_only' => False, "type" => "int", "subtype" => "unset", "choices" => "unset", "null" => False, "pk" => False, "protected" => False, "private" => False, "alias" => "crackerBinaryTypeId"];
+    $dict['version'] = ['read_only' => False, "type" => "str(20)", "subtype" => "unset", "choices" => "unset", "null" => False, "pk" => False, "protected" => False, "private" => False, "alias" => "version"];
+    $dict['downloadUrl'] = ['read_only' => False, "type" => "str(150)", "subtype" => "unset", "choices" => "unset", "null" => False, "pk" => False, "protected" => False, "private" => False, "alias" => "downloadUrl"];
+    $dict['binaryName'] = ['read_only' => False, "type" => "str(50)", "subtype" => "unset", "choices" => "unset", "null" => False, "pk" => False, "protected" => False, "private" => False, "alias" => "binaryName"];
+
+    return $dict;
+  }
+
   function getPrimaryKey() {
     return "crackerBinaryId";
   }
@@ -89,4 +100,9 @@ class CrackerBinary extends AbstractModel {
   const VERSION = "version";
   const DOWNLOAD_URL = "downloadUrl";
   const BINARY_NAME = "binaryName";
+
+  const PERM_CREATE = "permCrackerBinaryCreate";
+  const PERM_READ = "permCrackerBinaryRead";
+  const PERM_UPDATE = "permCrackerBinaryUpdate";
+  const PERM_DELETE = "permCrackerBinaryDelete";
 }

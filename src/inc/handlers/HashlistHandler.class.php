@@ -39,6 +39,10 @@ class HashlistHandler implements Handler {
           AccessControl::getInstance()->checkPermission(DHashlistAction::SET_SECRET_PERM);
           HashlistUtils::setSecret($_POST['hashlist'], @$_POST['secret'], AccessControl::getInstance()->getUser());
           break;
+        case DHashlistAction::SET_ARCHIVED:
+          AccessControl::getInstance()->checkPermission(DHashlistAction::SET_ARCHIVED_PERM);
+          HashlistUtils::setArchived($_POST['hashlist'], @$_POST['archived'], AccessControl::getInstance()->getUser());
+          break;
         case DHashlistAction::RENAME_HASHLIST:
           AccessControl::getInstance()->checkPermission(DHashlistAction::RENAME_HASHLIST_PERM);
           HashlistUtils::rename($_POST['hashlist'], $_POST['name'], AccessControl::getInstance()->getUser());
@@ -76,7 +80,7 @@ class HashlistHandler implements Handler {
             $_POST['name'],
             (isset($_POST["salted"]) && intval($_POST["salted"]) == 1) ? true : false,
             (isset($_POST["secret"]) && intval($_POST["secret"]) == 1) ? true : false,
-            (isset($_POST["hexsalted"]) && (isset($_POST["secret"]) && intval($_POST["secret"]) == 1) && intval($_POST["hexsalted"]) == 1) ? true : false,
+            (isset($_POST["hexsalted"]) && intval($_POST["hexsalted"]) == 1) ? true : false,
             $_POST['separator'],
             $_POST['format'],
             $_POST['hashtype'],
@@ -87,7 +91,7 @@ class HashlistHandler implements Handler {
             $_FILES,
             AccessControl::getInstance()->getUser(),
             (isset($_POST["useBrain"]) && intval($_POST["useBrain"]) == 1) ? 1 : 0,
-            intval($_POST['brain-features'])
+            (isset($_POST['brain-features'])) ? intval($_POST['brain-features']) : 0
           );
           header("Location: hashlists.php?id=" . $hashlist->getId());
           die();

@@ -4,6 +4,7 @@ namespace DBA;
 
 use MassUpdateSet;
 use PDO, PDOStatement, PDOException;
+use UI;
 
 /**
  * Abstraction of all ModelFactories.
@@ -113,7 +114,7 @@ abstract class AbstractModelFactory {
     $stmt = $dbh->prepare($query);
     $stmt->execute($vals);
     
-    $id = $dbh->lastInsertId();
+    $id = intval($dbh->lastInsertId());
     if ($id != 0) {
       $model->setId($id);
       return $model;
@@ -854,7 +855,7 @@ abstract class AbstractModelFactory {
     }
     else {
       global $CONN;
-      $dsn = 'mysql:dbname=' . $CONN['db'] . ";host=" . $CONN['server'] . ";port=" . $CONN['port'];
+      $dsn = 'mysql:dbname=' . $CONN['db'] . ";host=" . $CONN['server'] . ";port=" . $CONN['port'] . ";charset=utf8";
       $user = $CONN['user'];
       $password = $CONN['pass'];
     }
@@ -872,7 +873,8 @@ abstract class AbstractModelFactory {
       if ($test) {
         return null;
       }
-      die("Fatal Error ! Database connection failed: " . $e->getMessage());
+      UI::printError(UI::ERROR, "Fatal Error! Database connection failed: " . $e->getMessage());
+      return null;
     }
   }
 }

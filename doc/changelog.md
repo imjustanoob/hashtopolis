@@ -1,10 +1,66 @@
-# v0.12.0 -> v0.x.x
+# v0.14.1 -> v0.14.2
+
+## Tech Preview New API
+Release 0.14.2 comes with an update to the tech preview of APIv2. Be aware, it is a preview, it contains bugs and it will change; To use it, please see https://github.com/hashtopolis/server/wiki/Installation.
+
+## Bugfixes
+- Setting maxAgent after creating doesn't update the maxAgents of the taskwrapper. This only causes issues when the maxAgents was set at creation time. #1013
+
+# v0.14.0 -> v0.14.1
+
+## Tech Preview New API
+Release 0.14.1 comes with an update to the tech preview of APIv2. Be aware, it is a preview, it contains bugs and it will change; To use it, please see https://github.com/hashtopolis/server/wiki/Installation.
+
+## Bugfixes
+- Clicking pretask in Supertask create screen now directs correctly to the pretask and not a task with the same id (#945)
+- Pretask attackCmd parameter was not checked for maximum length of 256 on creation (#963)
+- Creating supertask fails when provided crackerType != pretask.crackerType (#969)
+- Searching for hashes and plaintext now also searches non archived hashlists (#974)
+
+## New feature
+- Number of agents per supertask/taskwrapper can be limited (#769).
+
+
+# v0.13.1 -> v0.14.0
+
+## Tech Preview New API
+Release 0.14.0 comes with a tech preview of APIv2. This is the starting point of the seperating of the frontend and the backend and gives 
+insight into what the future brings for Hashtopolis. We invite you to test it with the new web-ui and provide us with feedback. Be aware, 
+it is a preview, it contains bugs and it will change; also it does not contain any permission checking. To use it, please see 
+https://github.com/hashtopolis/server/wiki/Installation.
+
+## Default installation method changed to Dockerimage
+With the release 0.14.0 the default installation method changed to Docker. Docker images are now available at https://hub.docker.com/u/hashtopolis
+
+## Bugfixes
+- Setting 'Salt is in hex' during Hashlist creation will not set the --hex-salt flag (#892)
+
+# v0.13.0 -> v0.13.1
+
+## Bugfixes
+
+- When deleting a supertask that was created from an import, pretasks that were removed from this supertask should also be deleted (issue #865).
+- Setting config values to false using the user API now works as intended.
+- When using the rulesplit function an internal server error was thrown. (#836)
+- Deleting the last Hashlist resulted in an fatal error issue #888.
+
+## Enhancements
+
+- Hash.hash is now of type MEDIUMTEXT to avoid issues with longer hashes (e.g. LUKS, issue #851).
+
+# v0.12.0 -> v0.13.0
 
 ## Features
 
 - Added monitoring of CPU utilization of agents.
 - Cracked hashes for all hashlists can be shown together (caution: only use when having smaller hashlists).
 - Allow abort all chunks of a specific access group from the User API.
+- Tasks can be set to top priority (to be first in the list) by the User API.
+- Supertask runtime can be estimated on the supertask detail page by entering expected attack speeds for hashcat wordlist and bruteforce attacks.
+- Number of agents per task can be limited (pull request #764).
+- Hashlists can be archived.
+- Added hashtype dropdown autocompletion for creating new hashlists (pull request #781).
+- Allow agents to register as CPU agents only (feature request #805).
 
 ## Bugfixes
 
@@ -15,6 +71,20 @@
 - Fixed access controls for owners of agents.
 - Fixed improper updating of superhashlist counts on deletion of hashlists.
 - Fixed missing .map files for javascript dependencies.
+- Fixed users being able to access tasks with hashlists they would not be allowed to view.
+- Fixed users being able to access hashlists they are not allowed to see.
+- Adjusted handling to be able to deal with changed mode 22000 output.
+- Fixed pagination of hashes on cracks page.
+- Time of Zaps inserted is now saved.
+- Fixed unable to unassign agent from the task detail screen.
+- Fixed speed graph incorrect when status timer is different from servers default.
+- Fixed sending two to headers when sending emails (issue #751).
+- Fixed access group not being changed on Hashlist detailed screen (issue #765).
+- Fixed missing check on permissions for sending notifications (issue #757).
+- Fixed unassignable agents are shown as assignable (issue #777).
+- Fixed not deleting all references (related to zaps) when deleting hashlist (issue #747).
+- Added check for max length of the attack command (issue #668).
+- Fixed missing flag isArchived on User API getTask requests (issue #794).
 
 ## Enhancements
 
@@ -23,6 +93,13 @@
 - Agent activity is also shown on the agent status page.
 - Chunks for a task can be all view, instead of only the last 100.
 - Allow changing the status interval for created tasks.
+- Permissions for managing access groups is separate from the permission to manage users.
+- The agent status page shows more detailed information on temperature and usage.
+- JQuery updated to v3.6.0.
+- Print database connection error in UI theme.
+- Agent detail page now has a hide/show button for the config parameters.
+- Agents overview page and agent detail page now show counter for repeating devices.
+- Increase size of database column for storing agentstats.
 
 # v0.11.0 -> v0.12.0
 
@@ -293,7 +370,7 @@
 
 ## Bugfixes
 
-- Various vulnerabilities (CVE-2017-11680, CVE-2017-11681, CVE-2017-11682) fixed, see [issue #241](https://github.com/s3inlc/hashtopolis/issues/241)
+- Various vulnerabilities (CVE-2017-11680, CVE-2017-11681, CVE-2017-11682) fixed, see [issue #241](https://github.com/hashtopolis/server/issues/241)
 
 ## Technical
 

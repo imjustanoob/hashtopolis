@@ -22,6 +22,15 @@ class ApiGroup extends AbstractModel {
     return $dict;
   }
   
+  static function getFeatures() {
+    $dict = array();
+    $dict['apiGroupId'] = ['read_only' => True, "type" => "int", "subtype" => "unset", "choices" => "unset", "null" => False, "pk" => True, "protected" => True, "private" => False, "alias" => "apiGroupId"];
+    $dict['permissions'] = ['read_only' => False, "type" => "str(65535)", "subtype" => "unset", "choices" => "unset", "null" => False, "pk" => False, "protected" => False, "private" => False, "alias" => "permissions"];
+    $dict['name'] = ['read_only' => False, "type" => "str(100)", "subtype" => "unset", "choices" => "unset", "null" => False, "pk" => False, "protected" => False, "private" => False, "alias" => "name"];
+
+    return $dict;
+  }
+
   function getPrimaryKey() {
     return "apiGroupId";
   }
@@ -65,4 +74,9 @@ class ApiGroup extends AbstractModel {
   const API_GROUP_ID = "apiGroupId";
   const PERMISSIONS = "permissions";
   const NAME = "name";
+
+  const PERM_CREATE = "permApiGroupCreate";
+  const PERM_READ = "permApiGroupRead";
+  const PERM_UPDATE = "permApiGroupUpdate";
+  const PERM_DELETE = "permApiGroupDelete";
 }

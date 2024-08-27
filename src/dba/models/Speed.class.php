@@ -28,6 +28,17 @@ class Speed extends AbstractModel {
     return $dict;
   }
   
+  static function getFeatures() {
+    $dict = array();
+    $dict['speedId'] = ['read_only' => True, "type" => "int", "subtype" => "unset", "choices" => "unset", "null" => False, "pk" => True, "protected" => True, "private" => False, "alias" => "speedId"];
+    $dict['agentId'] = ['read_only' => True, "type" => "int", "subtype" => "unset", "choices" => "unset", "null" => False, "pk" => False, "protected" => True, "private" => False, "alias" => "agentId"];
+    $dict['taskId'] = ['read_only' => True, "type" => "int", "subtype" => "unset", "choices" => "unset", "null" => False, "pk" => False, "protected" => True, "private" => False, "alias" => "taskId"];
+    $dict['speed'] = ['read_only' => True, "type" => "int64", "subtype" => "unset", "choices" => "unset", "null" => False, "pk" => False, "protected" => True, "private" => False, "alias" => "speed"];
+    $dict['time'] = ['read_only' => True, "type" => "int64", "subtype" => "unset", "choices" => "unset", "null" => False, "pk" => False, "protected" => True, "private" => False, "alias" => "time"];
+
+    return $dict;
+  }
+
   function getPrimaryKey() {
     return "speedId";
   }
@@ -89,4 +100,9 @@ class Speed extends AbstractModel {
   const TASK_ID = "taskId";
   const SPEED = "speed";
   const TIME = "time";
+
+  const PERM_CREATE = "permSpeedCreate";
+  const PERM_READ = "permSpeedRead";
+  const PERM_UPDATE = "permSpeedUpdate";
+  const PERM_DELETE = "permSpeedDelete";
 }

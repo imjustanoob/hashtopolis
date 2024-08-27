@@ -34,6 +34,19 @@ class NotificationSetting extends AbstractModel {
     return $dict;
   }
   
+  static function getFeatures() {
+    $dict = array();
+    $dict['notificationSettingId'] = ['read_only' => True, "type" => "int", "subtype" => "unset", "choices" => "unset", "null" => False, "pk" => True, "protected" => True, "private" => False, "alias" => "notificationSettingId"];
+    $dict['action'] = ['read_only' => False, "type" => "str(50)", "subtype" => "unset", "choices" => "unset", "null" => False, "pk" => False, "protected" => False, "private" => False, "alias" => "action"];
+    $dict['objectId'] = ['read_only' => True, "type" => "int", "subtype" => "unset", "choices" => "unset", "null" => False, "pk" => False, "protected" => True, "private" => False, "alias" => "objectId"];
+    $dict['notification'] = ['read_only' => False, "type" => "str(50)", "subtype" => "unset", "choices" => "unset", "null" => False, "pk" => False, "protected" => False, "private" => False, "alias" => "notification"];
+    $dict['userId'] = ['read_only' => True, "type" => "int", "subtype" => "unset", "choices" => "unset", "null" => False, "pk" => False, "protected" => True, "private" => False, "alias" => "userId"];
+    $dict['receiver'] = ['read_only' => False, "type" => "str(256)", "subtype" => "unset", "choices" => "unset", "null" => False, "pk" => False, "protected" => False, "private" => False, "alias" => "receiver"];
+    $dict['isActive'] = ['read_only' => False, "type" => "bool", "subtype" => "unset", "choices" => "unset", "null" => False, "pk" => False, "protected" => False, "private" => False, "alias" => "isActive"];
+
+    return $dict;
+  }
+
   function getPrimaryKey() {
     return "notificationSettingId";
   }
@@ -113,4 +126,9 @@ class NotificationSetting extends AbstractModel {
   const USER_ID = "userId";
   const RECEIVER = "receiver";
   const IS_ACTIVE = "isActive";
+
+  const PERM_CREATE = "permNotificationSettingCreate";
+  const PERM_READ = "permNotificationSettingRead";
+  const PERM_UPDATE = "permNotificationSettingUpdate";
+  const PERM_DELETE = "permNotificationSettingDelete";
 }

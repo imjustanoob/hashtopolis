@@ -34,6 +34,19 @@ class Session extends AbstractModel {
     return $dict;
   }
   
+  static function getFeatures() {
+    $dict = array();
+    $dict['sessionId'] = ['read_only' => True, "type" => "int", "subtype" => "unset", "choices" => "unset", "null" => False, "pk" => True, "protected" => True, "private" => False, "alias" => "sessionId"];
+    $dict['userId'] = ['read_only' => True, "type" => "int", "subtype" => "unset", "choices" => "unset", "null" => False, "pk" => False, "protected" => True, "private" => False, "alias" => "userId"];
+    $dict['sessionStartDate'] = ['read_only' => True, "type" => "int64", "subtype" => "unset", "choices" => "unset", "null" => False, "pk" => False, "protected" => True, "private" => False, "alias" => "sessionStartDate"];
+    $dict['lastActionDate'] = ['read_only' => True, "type" => "int64", "subtype" => "unset", "choices" => "unset", "null" => False, "pk" => False, "protected" => True, "private" => False, "alias" => "lastActionDate"];
+    $dict['isOpen'] = ['read_only' => True, "type" => "bool", "subtype" => "unset", "choices" => "unset", "null" => False, "pk" => False, "protected" => True, "private" => False, "alias" => "isOpen"];
+    $dict['sessionLifetime'] = ['read_only' => True, "type" => "int", "subtype" => "unset", "choices" => "unset", "null" => False, "pk" => False, "protected" => True, "private" => False, "alias" => "sessionLifetime"];
+    $dict['sessionKey'] = ['read_only' => True, "type" => "str(256)", "subtype" => "unset", "choices" => "unset", "null" => False, "pk" => False, "protected" => True, "private" => False, "alias" => "sessionKey"];
+
+    return $dict;
+  }
+
   function getPrimaryKey() {
     return "sessionId";
   }
@@ -113,4 +126,9 @@ class Session extends AbstractModel {
   const IS_OPEN = "isOpen";
   const SESSION_LIFETIME = "sessionLifetime";
   const SESSION_KEY = "sessionKey";
+
+  const PERM_CREATE = "permSessionCreate";
+  const PERM_READ = "permSessionRead";
+  const PERM_UPDATE = "permSessionUpdate";
+  const PERM_DELETE = "permSessionDelete";
 }

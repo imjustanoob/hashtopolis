@@ -22,6 +22,15 @@ class AgentZap extends AbstractModel {
     return $dict;
   }
   
+  static function getFeatures() {
+    $dict = array();
+    $dict['agentZapId'] = ['read_only' => True, "type" => "int", "subtype" => "unset", "choices" => "unset", "null" => False, "pk" => True, "protected" => True, "private" => False, "alias" => "agentZapId"];
+    $dict['agentId'] = ['read_only' => True, "type" => "int", "subtype" => "unset", "choices" => "unset", "null" => False, "pk" => False, "protected" => True, "private" => False, "alias" => "agentId"];
+    $dict['lastZapId'] = ['read_only' => True, "type" => "str(128)", "subtype" => "unset", "choices" => "unset", "null" => False, "pk" => False, "protected" => True, "private" => False, "alias" => "lastZapId"];
+
+    return $dict;
+  }
+
   function getPrimaryKey() {
     return "agentZapId";
   }
@@ -65,4 +74,9 @@ class AgentZap extends AbstractModel {
   const AGENT_ZAP_ID = "agentZapId";
   const AGENT_ID = "agentId";
   const LAST_ZAP_ID = "lastZapId";
+
+  const PERM_CREATE = "permAgentZapCreate";
+  const PERM_READ = "permAgentZapRead";
+  const PERM_UPDATE = "permAgentZapUpdate";
+  const PERM_DELETE = "permAgentZapDelete";
 }

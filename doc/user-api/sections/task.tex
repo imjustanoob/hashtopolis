@@ -7,6 +7,7 @@
 				\item[1] Supertask
 			\end{description}
 			In case it is set in the server configuration, for normal tasks there will be a flag 'isComplete' be set which denotes if the full keyspace of the task was covered.
+			For tasks, the task Id is returned, for supertasks the taskwrapper Id is returned.
 			{
 				\color{blue}
 				\begin{verbatim}
@@ -85,6 +86,7 @@
 				  "benchmarkType": "speed",
 				  "statusTimer": 5,
 				  "priority": 0,
+				  "maxAgents": 4,
 				  "isCpuOnly": false,
 				  "isSmall": false,
 				  "skipKeyspace": 0,
@@ -227,6 +229,7 @@
 					    2
 					  ],
 					  "priority": 100,
+					  "maxAgents": 4,
 					  "preprocessorId": 0,
 					  "preprocessorCommand": "",
 					  "accessKey": "mykey"
@@ -252,6 +255,7 @@
 					  "crackerVersionId": 2,
 					  "files": [],
 					  "priority": 99,
+					  "maxAgents": 4,
 					  "preprocessorId": 0,
 					  "preprocessorCommand": "",
 					  "accessKey": "mykey"
@@ -346,6 +350,8 @@
 			}		
 		\subsection*{\textit{setSupertaskPriority}}
 			Set the priority for a supertask.
+			The required supertaskId parameter corresponds to the taskwrapper Id of the running supertask.
+			Note that the required taskwrapper Id can be queried by the API call listTasks.
 			{
 				\color{blue}
 				\begin{verbatim}
@@ -364,6 +370,54 @@
 				{
 				  "section": "task",
 				  "request": "setSupertaskPriority",
+				  "response": "OK"
+				}
+				\end{verbatim}
+			}
+		\subsection*{\textit{setTaskMaxAgents}}
+			Set the maximum number of assigned agents for a task. Takes effect when agents request a new chunk.
+			{
+				\color{blue}
+				\begin{verbatim}
+				{
+				  "section": "task",
+				  "request": "setTaskMaxAgents",
+				  "taskId": 7580,
+				  "maxAgents": 2,
+				  "accessKey": "mykey"
+				}
+				\end{verbatim}
+			}
+			{
+				\color{OliveGreen}
+				\begin{verbatim}
+				{
+				  "section": "task",
+				  "request": "setTaskMaxAgents",
+				  "response": "OK"
+				}
+				\end{verbatim}
+			}
+		\subsection*{\textit{setSupertaskMaxAgents}}
+			Set the maximum number of assigned agents for a running supertask. Takes effect when agents request a new chunk.
+			{
+				\color{blue}
+				\begin{verbatim}
+				{
+				  "section": "task",
+				  "request": "setSupertaskMaxAgents",
+				  "supertaskId": 42,
+				  "supertaskMaxAgents": 2,
+				  "accessKey": "mykey"
+				}
+				\end{verbatim}
+			}
+			{
+				\color{OliveGreen}
+				\begin{verbatim}
+				{
+				  "section": "task",
+				  "request": "setSupertaskMaxAgents",
 				  "response": "OK"
 				}
 				\end{verbatim}
@@ -686,6 +740,32 @@
 		}
 		\end{verbatim}
 	}
+
+\subsection*{\textit{setTaskTopPriority}}
+	The server sets a task to top priority.
+	{
+		\color{blue}
+		\begin{verbatim}
+		{
+		  "section": "task",
+		  "request": "setTaskTopPriority",
+		  "taskId": "1",
+		  "accessKey": "myKey"
+		}
+		\end{verbatim}
+	}
+	{
+		\color{OliveGreen}
+		\begin{verbatim}
+		{
+		  "section": "task",
+		  "request": "setTaskTopPriority",
+		  "response": "OK"
+		}
+		\end{verbatim}
+	}
+
+
 
 
 

@@ -28,8 +28,14 @@ class UserAPITask extends UserAPIBasic {
         case USectionTask::SET_TASK_PRIORITY:
           $this->setTaskPriority($QUERY);
           break;
+        case USectionTask::SET_TASK_TOP_PRIORITY:
+          $this->setTaskPriority($QUERY, true);
+          break;
         case USectionTask::SET_SUPERTASK_PRIORITY:
           $this->setSuperTaskPriority($QUERY);
+          break;
+        case USectionTask::SET_SUPERTASK_TOP_PRIORITY:
+          $this->setSuperTaskPriority($QUERY, true);
           break;
         case USectionTask::SET_TASK_NAME:
           $this->setTaskName($QUERY);
@@ -42,6 +48,12 @@ class UserAPITask extends UserAPIBasic {
           break;
         case USectionTask::SET_TASK_SMALL:
           $this->setSmallTask($QUERY);
+          break;
+        case USectionTask::SET_TASK_MAX_AGENTS:
+          $this->setTaskMaxAgents($QUERY);
+          break;
+        case USectionTask::SET_SUPERTASK_MAX_AGENTS:
+          $this->setSuperTaskMaxAgents($QUERY);
           break;
         case USectionTask::TASK_UNASSIGN_AGENT:
           $this->unassignAgent($QUERY);
@@ -192,7 +204,31 @@ class UserAPITask extends UserAPIBasic {
     AgentUtils::assign($QUERY[UQueryTask::AGENT_ID], $QUERY[UQueryTask::TASK_ID], $this->user);
     $this->sendSuccessResponse($QUERY);
   }
-  
+
+    /**
+   * @param array $QUERY
+   * @throws HTException
+   */
+  private function setTaskMaxAgents($QUERY) {
+    if (!isset($QUERY[UQueryTask::TASK_ID]) || !isset($QUERY[UQueryTask::TASK_MAX_AGENTS])) {
+      throw new HTException("Invalid query!");
+    }
+    TaskUtils::setTaskMaxAgents($QUERY[UQueryTask::TASK_ID], $QUERY[UQueryTask::TASK_MAX_AGENTS], $this->user);
+    $this->sendSuccessResponse($QUERY);
+  }
+
+  /**
+   * @param array $QUERY
+   * @throws HTException
+   */
+  private function setSuperTaskMaxAgents($QUERY) {
+    if (!isset($QUERY[UQueryTask::SUPERTASK_ID]) || !isset($QUERY[UQueryTask::SUPERTASK_MAX_AGENTS])) {
+      throw new HTException("Invalid query!");
+    }
+    TaskUtils::setSuperTaskMaxAgents($QUERY[UQueryTask::SUPERTASK_ID], $QUERY[UQueryTask::SUPERTASK_MAX_AGENTS], $this->user);
+    $this->sendSuccessResponse($QUERY);
+  }
+
   /**
    * @param array $QUERY
    * @throws HTException
@@ -243,25 +279,47 @@ class UserAPITask extends UserAPIBasic {
   
   /**
    * @param array $QUERY
+   * @param bool $topPriority
    * @throws HTException
    */
-  private function setTaskPriority($QUERY) {
+  private function setTaskPriority($QUERY, $topPriority = false) {
     if (!isset($QUERY[UQueryTask::TASK_ID]) || !isset($QUERY[UQueryTask::TASK_PRIORITY])) {
       throw new HTException("Invalid query!");
     }
-    TaskUtils::updatePriority($QUERY[UQueryTask::TASK_ID], $QUERY[UQueryTask::TASK_PRIORITY], $this->user);
+    if ($topPriority) {
+      TaskUtils::updatePriority($QUERY[UQueryTask::TASK_ID], -1, $this->user, true);
+    }
+    else {
+      if (!isset($QUERY[UQueryTask::TASK_PRIORITY])) {
+        throw new HTException("Invalid query!");
+      }
+      TaskUtils::updatePriority($QUERY[UQueryTask::TASK_ID], $QUERY[UQueryTask::TASK_PRIORITY], $this->user);
+    }
     $this->sendSuccessResponse($QUERY);
   }
   
   /**
    * @param array $QUERY
+   * @param bool $topPriority
    * @throws HTException
    */
-  private function setSupertaskPriority($QUERY) {
-    if (!isset($QUERY[UQueryTask::SUPERTASK_ID]) || !isset($QUERY[UQueryTask::SUPERTASK_PRIORITY])) {
-      throw new HTException("Invalid query!");
+  private function setSupertaskPriority($QUERY, $topPriority = false) {
+    // check whether an Id is submitted
+    // note that supertaskId here corresponds with the taskwrapper Id of the underlying subtasks of the running supertask
+    if (!isset($QUERY[UQueryTask::SUPERTASK_ID])) {
+      throw new HTException("Invalid query! No ID!");
     }
-    TaskUtils::setSupertaskPriority($QUERY[UQueryTask::SUPERTASK_ID], $QUERY[UQueryTask::SUPERTASK_PRIORITY], $this->user);
+    // set priority depending on $topPriority
+    if ($topPriority) {
+      TaskUtils::setSupertaskPriority($QUERY[UQueryTask::SUPERTASK_ID], -1, $this->user, true);
+    }
+    else {
+      // check whether a priority is submitted
+      if (!isset($QUERY[UQueryTask::SUPERTASK_PRIORITY])) {
+        throw new HTException("Invalid query!");
+      }
+      TaskUtils::setSupertaskPriority($QUERY[UQueryTask::SUPERTASK_ID], $QUERY[UQueryTask::SUPERTASK_PRIORITY], $this->user);
+    }
     $this->sendSuccessResponse($QUERY);
   }
   
@@ -328,7 +386,8 @@ class UserAPITask extends UserAPIBasic {
       $QUERY[UQueryTask::TASK_PREPROCESSOR],
       $QUERY[UQueryTask::TASK_PREPROCESSOR_COMMAND],
       $QUERY[UQueryTask::TASK_SKIP],
-      $QUERY[UQueryTask::TASK_PRIORITY],
+      (isset($QUERY[UQueryTask::TASK_PRIORITY])) ? intval($QUERY[UQueryTask::TASK_PRIORITY]) : 0,
+      (isset($QUERY[UQueryTask::TASK_MAX_AGENTS])) ? intval($QUERY[UQueryTask::TASK_MAX_AGENTS]) : 0,
       $QUERY[UQueryTask::TASK_FILES],
       $QUERY[UQueryTask::TASK_CRACKER_VERSION],
       $this->user
@@ -426,8 +485,10 @@ class UserAPITask extends UserAPIBasic {
       UResponseTask::TASK_BENCH_TYPE => ($task->getUseNewBench() == 1) ? "speed" : "runtime",
       UResponseTask::TASK_STATUS => (int)$task->getStatusTimer(),
       UResponseTask::TASK_PRIORITY => (int)$task->getPriority(),
+      UResponseTask::TASK_MAX_AGENTS => (int)$task->getMaxAgents(),
       UResponseTask::TASK_CPU_ONLY => ($task->getIsCpuTask() == 1) ? true : false,
       UResponseTask::TASK_SMALL => ($task->getIsSmall() == 1) ? true : false,
+      UResponseTask::TASK_ARCHIVED => ($task->getIsArchived() == 1) ? true : false,
       UResponseTask::TASK_SKIP => (int)$task->getSkipKeyspace(),
       UResponseTask::TASK_KEYSPACE => (int)$task->getKeyspace(),
       UResponseTask::TASK_DISPATCHED => (int)$task->getKeyspaceProgress(),
@@ -519,7 +580,8 @@ class UserAPITask extends UserAPIBasic {
           UResponseTask::TASKS_NAME => $taskWrapper->getTaskWrapperName(),
           UResponseTask::TASKS_TYPE => 1,
           UResponseTask::TASKS_HASHLIST => (int)$taskWrapper->getHashlistId(),
-          UResponseTask::TASKS_PRIORITY => (int)$taskWrapper->getPriority()
+          UResponseTask::TASKS_PRIORITY => (int)$taskWrapper->getPriority(),
+          UResponseTask::TASKS_MAX_AGENTS => (int)$taskWrapper->getMaxAgents()
         ];
       }
     }

@@ -19,6 +19,14 @@ class ConfigSection extends AbstractModel {
     return $dict;
   }
   
+  static function getFeatures() {
+    $dict = array();
+    $dict['configSectionId'] = ['read_only' => True, "type" => "int", "subtype" => "unset", "choices" => "unset", "null" => False, "pk" => True, "protected" => True, "private" => False, "alias" => "configSectionId"];
+    $dict['sectionName'] = ['read_only' => False, "type" => "str(100)", "subtype" => "unset", "choices" => "unset", "null" => False, "pk" => False, "protected" => False, "private" => False, "alias" => "sectionName"];
+
+    return $dict;
+  }
+
   function getPrimaryKey() {
     return "configSectionId";
   }
@@ -53,4 +61,9 @@ class ConfigSection extends AbstractModel {
   
   const CONFIG_SECTION_ID = "configSectionId";
   const SECTION_NAME = "sectionName";
+
+  const PERM_CREATE = "permConfigSectionCreate";
+  const PERM_READ = "permConfigSectionRead";
+  const PERM_UPDATE = "permConfigSectionUpdate";
+  const PERM_DELETE = "permConfigSectionDelete";
 }

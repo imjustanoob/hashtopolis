@@ -28,6 +28,17 @@ class Zap extends AbstractModel {
     return $dict;
   }
   
+  static function getFeatures() {
+    $dict = array();
+    $dict['zapId'] = ['read_only' => True, "type" => "int", "subtype" => "unset", "choices" => "unset", "null" => False, "pk" => True, "protected" => True, "private" => False, "alias" => "zapId"];
+    $dict['hash'] = ['read_only' => True, "type" => "str(65535)", "subtype" => "unset", "choices" => "unset", "null" => False, "pk" => False, "protected" => True, "private" => False, "alias" => "hash"];
+    $dict['solveTime'] = ['read_only' => True, "type" => "int64", "subtype" => "unset", "choices" => "unset", "null" => False, "pk" => False, "protected" => True, "private" => False, "alias" => "solveTime"];
+    $dict['agentId'] = ['read_only' => True, "type" => "int", "subtype" => "unset", "choices" => "unset", "null" => False, "pk" => False, "protected" => True, "private" => False, "alias" => "agentId"];
+    $dict['hashlistId'] = ['read_only' => True, "type" => "int", "subtype" => "unset", "choices" => "unset", "null" => False, "pk" => False, "protected" => True, "private" => False, "alias" => "hashlistId"];
+
+    return $dict;
+  }
+
   function getPrimaryKey() {
     return "zapId";
   }
@@ -89,4 +100,9 @@ class Zap extends AbstractModel {
   const SOLVE_TIME = "solveTime";
   const AGENT_ID = "agentId";
   const HASHLIST_ID = "hashlistId";
+
+  const PERM_CREATE = "permZapCreate";
+  const PERM_READ = "permZapRead";
+  const PERM_UPDATE = "permZapUpdate";
+  const PERM_DELETE = "permZapDelete";
 }

@@ -43,26 +43,29 @@ class UQueryTask extends UQuery {
   const TASK_CRACKER_VERSION      = "crackerVersionId";
   const TASK_FILES                = "files";
   const TASK_PRIORITY             = "priority";
+  const TASK_MAX_AGENTS           = "maxAgents";
   const TASK_PRINCE               = "isPrince";  // DEPRECATED
   const TASK_PREPROCESSOR_COMMAND = "preprocessorCommand";
   const TASK_PREPROCESSOR         = "preprocessorId";
   
-  const TASK_CRACKER_TYPE  = "crackerTypeId";
-  const PRETASKS           = "pretasks";
-  const MASKS              = "masks";
-  const TASK_OPTIMIZED     = "optimizedFlag";
-  const AGENT_ID           = "agentId";
-  const SUPERTASK_PRIORITY = "supertaskPriority";
-  const SUPERTASK_NAME     = "name";
-  const TASK_BASEFILES     = "basefiles";
-  const TASK_ITERFILES     = "iterfiles";
+  const TASK_CRACKER_TYPE    = "crackerTypeId";
+  const PRETASKS             = "pretasks";
+  const MASKS                = "masks";
+  const TASK_OPTIMIZED       = "optimizedFlag";
+  const AGENT_ID             = "agentId";
+  const SUPERTASK_PRIORITY   = "supertaskPriority";
+  const SUPERTASK_MAX_AGENTS = "supertaskMaxAgents";
+  const SUPERTASK_NAME       = "name";
+  const TASK_BASEFILES       = "basefiles";
+  const TASK_ITERFILES       = "iterfiles";
   
-  const PRETASK_PRIORITY  = "priority";
-  const PRETASK_NAME      = "name";
-  const PRETASK_COLOR     = "color";
-  const PRETASK_CHUNKSIZE = "chunksize";
-  const PRETASK_CPU_ONLY  = "isCpuOnly";
-  const PRETASK_SMALL     = "isSmall";
+  const PRETASK_PRIORITY   = "priority";
+  const PRETASK_MAX_AGENTS = "maxAgents";
+  const PRETASK_NAME       = "name";
+  const PRETASK_COLOR      = "color";
+  const PRETASK_CHUNKSIZE  = "chunksize";
+  const PRETASK_CPU_ONLY   = "isCpuOnly";
+  const PRETASK_SMALL      = "isSmall";
 }
 
 class UQueryHashlist extends UQuery {
@@ -79,6 +82,7 @@ class UQueryHashlist extends UQuery {
   const HASHLIST_DATA            = "data";
   const HASHLIST_USE_BRAIN       = "useBrain";
   const HASHLIST_BRAIN_FEATURES  = "brainFeatures";
+  const HASHLIST_IS_ARCHIVED     = "isArchived";
   
   const HASH = "hash";
 }
@@ -217,6 +221,7 @@ class UResponseTask extends UResponse {
   const TASKS_TYPE         = "type";
   const TASKS_HASHLIST     = "hashlistId";
   const TASKS_PRIORITY     = "priority";
+  const TASKS_MAX_AGENTS   = "maxAgents";
   const TASKS_IS_COMPLETE  = "isComplete";
   
   const TASK_ID                   = "taskId";
@@ -227,8 +232,10 @@ class UResponseTask extends UResponse {
   const TASK_BENCH_TYPE           = "benchmarkType";
   const TASK_STATUS               = "statusTimer";
   const TASK_PRIORITY             = "priority";
+  const TASK_MAX_AGENTS           = "maxAgents";
   const TASK_CPU_ONLY             = "isCpuOnly";
   const TASK_SMALL                = "isSmall";
+  const TASK_ARCHIVED             = "isArchived";
   const TASK_SKIP                 = "skipKeyspace";
   const TASK_KEYSPACE             = "keyspace";
   const TASK_DISPATCHED           = "dispatched";
@@ -251,10 +258,11 @@ class UResponseTask extends UResponse {
   
   const SUBTASKS = "subtasks";
   
-  const PRETASKS          = "pretasks";
-  const PRETASKS_ID       = "pretaskId";
-  const PRETASKS_NAME     = "name";
-  const PRETASKS_PRIORITY = "priority";
+  const PRETASKS            = "pretasks";
+  const PRETASKS_ID         = "pretaskId";
+  const PRETASKS_NAME       = "name";
+  const PRETASKS_PRIORITY   = "priority";
+  const PRETASKS_MAX_AGENTS = "maxAgents";
   
   const PRETASK_ID         = "pretaskId";
   const PRETASK_NAME       = "name";
@@ -264,6 +272,7 @@ class UResponseTask extends UResponse {
   const PRETASK_BENCH_TYPE = "benchmarkType";
   const PRETASK_STATUS     = "statusTimer";
   const PRETASK_PRIORITY   = "priority";
+  const PRETASK_MAX_AGENTS = "maxAgents";
   const PRETASK_CPU_ONLY   = "isCpuOnly";
   const PRETASK_SMALL      = "isSmall";
   const PRETASK_FILES      = "files";
@@ -275,8 +284,9 @@ class UResponseTask extends UResponse {
   const SUPERTASKS_ID   = "supertaskId";
   const SUPERTASKS_NAME = "name";
   
-  const SUPERTASK_ID   = "supertaskId";
-  const SUPERTASK_NAME = "name";
+  const SUPERTASK_ID         = "supertaskId";
+  const SUPERTASK_NAME       = "name";
+  const SUPERTASK_MAX_AGENTS = "maxAgents";
   
   const CHUNK_ID         = "chunkId";
   const CHUNK_START      = "start";
@@ -317,6 +327,7 @@ class UResponseHashlist extends UResponse {
   const HASHLIST_SALT_SEPARATOR = "saltSeparator";
   const HASHLIST_NOTES          = "hashlistNotes";
   const HASHLIST_BRAIN          = "useBrain";
+  const HASHLIST_IS_ARCHIVED    = "isArchived";
   
   const ZAP_LINES_PROCESSED = "linesProcessed";
   const ZAP_NEW_CRACKED     = "newCracked";
@@ -582,6 +593,8 @@ class USectionAgent extends UApi {
         return "Set how errors from an agent should be handled";
       case USectionAgent::SET_TRUSTED:
         return "Set if an agent is trusted or not";
+      case USectionAgent::DELETE_AGENT:
+        return "Delete agents";
       default:
         return "__" . $constant . "__";
     }
@@ -599,16 +612,20 @@ class USectionTask extends UApi {
   const RUN_PRETASK   = "runPretask";
   const RUN_SUPERTASK = "runSupertask";
   
-  const SET_TASK_PRIORITY      = "setTaskPriority";
-  const SET_SUPERTASK_PRIORITY = "setSupertaskPriority";
-  const SET_TASK_NAME          = "setTaskName";
-  const SET_TASK_COLOR         = "setTaskColor";
-  const SET_TASK_CPU_ONLY      = "setTaskCpuOnly";
-  const SET_TASK_SMALL         = "setTaskSmall";
-  const TASK_UNASSIGN_AGENT    = "taskUnassignAgent";
-  const TASK_ASSIGN_AGENT      = "taskAssignAgent";
-  const DELETE_TASK            = "deleteTask";
-  const PURGE_TASK             = "purgeTask";
+  const SET_TASK_PRIORITY          = "setTaskPriority";
+  const SET_TASK_TOP_PRIORITY      = "setTaskTopPriority";
+  const SET_SUPERTASK_PRIORITY     = "setSupertaskPriority";
+  const SET_SUPERTASK_MAX_AGENTS   = "setSupertaskMaxAgents";
+  const SET_SUPERTASK_TOP_PRIORITY = "setSupertaskTopPriority";
+  const SET_TASK_NAME              = "setTaskName";
+  const SET_TASK_COLOR             = "setTaskColor";
+  const SET_TASK_CPU_ONLY          = "setTaskCpuOnly";
+  const SET_TASK_SMALL             = "setTaskSmall";
+  const SET_TASK_MAX_AGENTS        = "setTaskMaxAgents";
+  const TASK_UNASSIGN_AGENT        = "taskUnassignAgent";
+  const TASK_ASSIGN_AGENT          = "taskAssignAgent";
+  const DELETE_TASK                = "deleteTask";
+  const PURGE_TASK                 = "purgeTask";
   
   const SET_SUPERTASK_NAME = "setSupertaskName";
   const DELETE_SUPERTASK   = "deleteSupertask";
@@ -634,8 +651,12 @@ class USectionTask extends UApi {
         return "Run a configured supertask with a hashlist";
       case USectionTask::SET_TASK_PRIORITY:
         return "Set the priority of a task";
+      case USectionTask::SET_TASK_TOP_PRIORITY:
+        return "Set task priority to the previous highest plus one hundred";
       case USectionTask::SET_SUPERTASK_PRIORITY:
         return "Set the priority of a supertask";
+      case USectionTask::SET_SUPERTASK_TOP_PRIORITY:
+        return "Set supertask priority to the previous highest plus one hundred";
       case USectionTask::SET_TASK_NAME:
         return "Rename a task";
       case USectionTask::SET_TASK_COLOR:
@@ -660,6 +681,10 @@ class USectionTask extends UApi {
         return "Archive supertasks";
       case USectionTask::GET_CRACKED:
         return "Retrieve all cracked hashes by a task";
+      case USectionTask::SET_TASK_MAX_AGENTS:
+        return "Set max agents for tasks";
+      case USectionTask::TASK_ASSIGN_AGENT:
+        return "Assign agents to a task";
       default:
         return "__" . $constant . "__";
     }
@@ -671,13 +696,14 @@ class USectionPretask extends UApi {
   const GET_PRETASK    = "getPretask";
   const CREATE_PRETASK = "createPretask";
   
-  const SET_PRETASK_PRIORITY  = "setPretaskPriority";
-  const SET_PRETASK_NAME      = "setPretaskName";
-  const SET_PRETASK_COLOR     = "setPretaskColor";
-  const SET_PRETASK_CHUNKSIZE = "setPretaskChunksize";
-  const SET_PRETASK_CPU_ONLY  = "setPretaskCpuOnly";
-  const SET_PRETASK_SMALL     = "setPretaskSmall";
-  const DELETE_PRETASK        = "deletePretask";
+  const SET_PRETASK_PRIORITY   = "setPretaskPriority";
+  const SET_PRETASK_MAX_AGENTS = "setPretaskMaxAgents";
+  const SET_PRETASK_NAME       = "setPretaskName";
+  const SET_PRETASK_COLOR      = "setPretaskColor";
+  const SET_PRETASK_CHUNKSIZE  = "setPretaskChunksize";
+  const SET_PRETASK_CPU_ONLY   = "setPretaskCpuOnly";
+  const SET_PRETASK_SMALL      = "setPretaskSmall";
+  const DELETE_PRETASK         = "deletePretask";
   
   public function describe($constant) {
     switch ($constant) {
@@ -701,6 +727,8 @@ class USectionPretask extends UApi {
         return "Set if a preconfigured task is small or not";
       case USectionPretask::DELETE_PRETASK:
         return "Delete preconfigured tasks";
+      case USectionPretask::SET_PRETASK_MAX_AGENTS:
+        return "Set max agents for a preconfigured task";
       default:
         return "__" . $constant . "__";
     }
@@ -744,15 +772,16 @@ class USectionHashlist extends UApi {
   const CREATE_HASHLIST   = "createHashlist";
   const SET_HASHLIST_NAME = "setHashlistName";
   const SET_SECRET        = "setSecret";
+  const SET_ARCHIVED      = "setArchived";
   
   const IMPORT_CRACKED    = "importCracked";
   const EXPORT_CRACKED    = "exportCracked";
   const GENERATE_WORDLIST = "generateWordlist";
   const EXPORT_LEFT       = "exportLeft";
   
-  const DELETE_HASHLIST = "deleteHashlist";
-  const GET_HASH        = "getHash";
-  const GET_CRACKED     = "getCracked";
+  const DELETE_HASHLIST  = "deleteHashlist";
+  const GET_HASH         = "getHash";
+  const GET_CRACKED      = "getCracked";
   
   public function describe($constant) {
     switch ($constant) {
@@ -780,6 +809,8 @@ class USectionHashlist extends UApi {
         return "Query for specific hashes";
       case USectionHashlist::GET_CRACKED:
         return "Query cracked hashes of a hashlist";
+      case USectionHashlist::SET_ARCHIVED:
+        return "Query to archive/un-archie hashlist";
       default:
         return "__" . $constant . "__";
     }

@@ -19,6 +19,14 @@ class StoredValue extends AbstractModel {
     return $dict;
   }
   
+  static function getFeatures() {
+    $dict = array();
+    $dict['storedValueId'] = ['read_only' => True, "type" => "str(50)", "subtype" => "unset", "choices" => "unset", "null" => False, "pk" => True, "protected" => True, "private" => False, "alias" => "storedValueId"];
+    $dict['val'] = ['read_only' => False, "type" => "str(256)", "subtype" => "unset", "choices" => "unset", "null" => False, "pk" => False, "protected" => False, "private" => False, "alias" => "val"];
+
+    return $dict;
+  }
+
   function getPrimaryKey() {
     return "storedValueId";
   }
@@ -53,4 +61,9 @@ class StoredValue extends AbstractModel {
   
   const STORED_VALUE_ID = "storedValueId";
   const VAL = "val";
+
+  const PERM_CREATE = "permStoredValueCreate";
+  const PERM_READ = "permStoredValueRead";
+  const PERM_UPDATE = "permStoredValueUpdate";
+  const PERM_DELETE = "permStoredValueDelete";
 }
