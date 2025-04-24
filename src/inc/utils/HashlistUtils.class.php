@@ -34,7 +34,7 @@ class HashlistUtils {
     if (!AccessUtils::userCanAccessHashlists($hashlist, $user)) {
       throw new HTException("No access to hashlist!");
     }
-    Factory::getHashlistFactory()->set($hashlist, Hashlist::NOTES, htmlentities($notes, ENT_QUOTES, "UTF-8"));
+    Factory::getHashlistFactory()->set($hashlist, Hashlist::NOTES, $notes);
   }
   
   /**
@@ -762,7 +762,6 @@ class HashlistUtils {
    * @throws HTException
    */
   public static function createHashlist($name, $isSalted, $isSecret, $isHexSalted, $separator, $format, $hashtype, $saltSeparator, $accessGroupId, $source, $post, $files, $user, $brainId, $brainFeatures) {
-    $name = htmlentities($name, ENT_QUOTES, "UTF-8");
     $salted = ($isSalted) ? "1" : "0";
     $secret = ($isSecret) ? "1" : "0";
     $hexsalted = ($isHexSalted) ? "1" : "0";
@@ -1130,20 +1129,23 @@ class HashlistUtils {
     if (!AccessUtils::userCanAccessHashlists($lists, $user)) {
       throw new HTException("No access to the hashlists!");
     }
-    
     $hashlistIds = Util::arrayOfIds($lists);
     $qF1 = new ContainFilter(Hash::HASHLIST_ID, $hashlistIds);
     $qF2 = new QueryFilter(Hash::IS_CRACKED, 1, "=");
     $hashes = [];
-    $entries = Factory::getHashFactory()->filter([Factory::FILTER => [$qF1, $qF2]]);
+    $isBinary = $hashlist->getFormat() != 0;
+    $factory = $isBinary ? Factory::getHashBinaryFactory() : Factory::getHashFactory();
+    $entries = $factory->filter([Factory::FILTER => [$qF1, $qF2]]);
     foreach ($entries as $entry) {
       $arr = [
         "hash" => $entry->getHash(),
         "plain" => $entry->getPlaintext(),
         "crackpos" => $entry->getCrackPos()
       ];
-      if (strlen($entry->getSalt()) > 0) {
-        $arr["hash"] .= $hashlist->getSaltSeparator() . $entry->getSalt();
+      if ($hashlist->getIsSalted()) {
+        if (strlen($entry->getSalt()) > 0) {
+          $arr["hash"] .= $hashlist->getSaltSeparator() . $entry->getSalt();
+        }
       }
       $hashes[] = $arr;
     }
